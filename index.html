@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GS Ferramentas Industriais — Catálogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{--orange:#E84A0C;--orange-dark:#BF3A08;--black:#1A1A1A;--dark:#222;--mid:#444;--gray:#888;--light:#F5F4F2;--border:#E0DDD8;--white:#fff;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Barlow',sans-serif;background:var(--light);color:var(--black);min-height:100vh;}
+  header{background:var(--black);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--orange);}
+  .logo-area{display:flex;align-items:center;gap:14px;}
+  .logo-area img{height:44px;width:44px;object-fit:contain;border-radius:4px;background:#fff;padding:2px;}
+  .logo-text strong{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;}
+  .logo-text span{display:block;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;}
+  .header-badge{background:var(--orange);color:#fff;font-size:11px;font-weight:600;padding:5px 12px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;}
+  .search-section{background:var(--dark);padding:1.2rem 2rem;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .search-wrap{flex:1;min-width:220px;position:relative;}
+  .search-wrap input{width:100%;padding:10px 16px 10px 42px;background:#333;border:1px solid #444;border-radius:3px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border .2s;}
+  .search-wrap input:focus{border-color:var(--orange);}
+  .search-wrap input::placeholder{color:#666;}
+  .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:none;stroke:#666;stroke-width:2;}
+  .filter-select{padding:10px 14px;background:#333;border:1px solid #444;border-radius:3px;color:#ccc;font-family:'Barlow',sans-serif;font-size:14px;outline:none;cursor:pointer;min-width:160px;}
+  .filter-select:focus{border-color:var(--orange);}
+  .result-count{color:#888;font-size:13px;white-space:nowrap;}
+  .cart-btn{background:var(--orange);color:#fff;border:none;border-radius:3px;padding:10px 18px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .2s;white-space:nowrap;}
+  .cart-btn:hover{background:var(--orange-dark);}
+  .cart-count{background:var(--black);color:var(--orange);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+  .grid-section{padding:2rem;}
+  .section-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:1.2rem;display:flex;align-items:center;gap:10px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+  .product-card{background:var(--white);border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .2s,transform .15s;position:relative;}
+  .product-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.10);transform:translateY(-2px);}
+  .product-card.out-of-stock{opacity:.6;}
+  .product-img-wrap{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--light);border-bottom:1px solid var(--border);position:relative;flex-shrink:0;cursor:pointer;}
+  .product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;display:block;}
+  .product-card:hover .product-img-wrap img{transform:scale(1.05);}
+  .product-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#bbb;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+  .product-img-placeholder svg{width:38px;height:38px;opacity:.25;}
+  .stock-badge{position:absolute;top:10px;left:10px;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:700;z-index:2;}
+  .stock-badge.in{background:rgba(30,100,35,.88);color:#fff;}
+  .stock-badge.out{background:rgba(180,30,30,.88);color:#fff;}
+  .product-body{padding:1.2rem;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .product-category{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);font-weight:700;}
+  .product-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--black);line-height:1.2;cursor:pointer;}
+  .product-name:hover{color:var(--orange);}
+  .product-code{font-size:11px;color:var(--gray);}
+  .product-desc{font-size:13px;color:var(--mid);line-height:1.6;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .product-price-area{margin-top:6px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+  .price-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);font-weight:600;}
+  .price-value{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--black);line-height:1.1;margin-top:2px;}
+  .price-unit{font-size:12px;color:var(--gray);}
+  .add-btn{background:var(--orange);color:#fff;border:none;border-radius:4px;padding:10px 14px;font-size:13px;font-weight:600;font-family:'Barlow',sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s;white-space:nowrap;flex-shrink:0;}
+  .add-btn:hover{background:var(--orange-dark);}
+  .add-btn:disabled{background:var(--border);color:var(--gray);cursor:not-allowed;}
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:1rem;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--white);border-radius:8px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+  .modal-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px 8px 0 0;display:block;}
+  .modal-img-ph{width:100%;aspect-ratio:16/9;background:var(--light);display:flex;align-items:center;justify-content:center;border-radius:8px 8px 0 0;color:#bbb;font-size:13px;letter-spacing:1px;}
+  .modal-body{padding:1.8rem;}
+  .modal-cat{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);font-weight:700;}
+  .modal-name{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;margin:6px 0 4px;line-height:1.1;}
+  .modal-meta{font-size:12px;color:var(--gray);margin-bottom:1.2rem;display:flex;gap:16px;flex-wrap:wrap;}
+  .modal-divider{height:1px;background:var(--border);margin:1.2rem 0;}
+  .modal-desc-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+  .modal-desc{font-size:14px;color:var(--mid);line-height:1.75;margin-bottom:1.5rem;}
+  .modal-price-box{background:var(--light);border-radius:6px;padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .modal-price-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);font-weight:600;}
+  .modal-price-value{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;color:var(--black);line-height:1;}
+  .modal-price-unit{font-size:12px;color:var(--gray);margin-top:2px;}
+  .modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;background:rgba(0,0,0,.45);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
+  .modal-close:hover{background:rgba(0,0,0,.75);}
+  /* CART */
+  .cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;}
+  .cart-overlay.open{display:block;}
+  .cart-drawer{position:fixed;right:0;top:0;bottom:0;width:400px;max-width:100vw;background:var(--white);z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease;border-left:3px solid var(--orange);}
+  .cart-overlay.open .cart-drawer{transform:translateX(0);}
+  .cart-header{background:var(--black);color:#fff;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+  .cart-header h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;}
+  .close-btn{background:none;border:none;color:#aaa;cursor:pointer;font-size:22px;}
+  .close-btn:hover{color:#fff;}
+  .cart-items{flex:1;overflow-y:auto;padding:1rem;}
+  .cart-item{display:flex;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);gap:10px;}
+  .cart-thumb{width:52px;height:52px;object-fit:cover;border-radius:4px;background:var(--light);border:1px solid var(--border);flex-shrink:0;}
+  .cart-thumb-ph{width:52px;height:52px;background:var(--light);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#ccc;font-size:22px;}
+  .cart-item-info{flex:1;min-width:0;}
+  .cart-item-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cart-item-code{font-size:11px;color:var(--gray);}
+  .cart-item-controls{display:flex;align-items:center;gap:5px;}
+  .qty-btn{width:26px;height:26px;border:1px solid var(--border);background:#fff;cursor:pointer;border-radius:2px;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .qty-btn:hover{background:var(--light);}
+  .qty-val{font-size:14px;font-weight:600;min-width:22px;text-align:center;}
+  .cart-item-price{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;min-width:70px;text-align:right;}
+  .remove-item{background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:2px;}
+  .remove-item:hover{color:#C62828;}
+  .cart-footer{padding:1.2rem 1.5rem;border-top:2px solid var(--border);}
+  .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;}
+  .cart-total span{font-size:14px;color:var(--mid);}
+  .cart-total strong{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;}
+  .cart-note{font-size:11px;color:var(--gray);margin-bottom:1rem;line-height:1.5;}
+  .send-btn{width:100%;padding:13px;background:var(--orange);color:#fff;border:none;border-radius:3px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;}
+  .send-btn:hover{background:var(--orange-dark);}
+  .empty-cart{text-align:center;padding:3rem 1rem;color:var(--gray);font-size:14px;}
+  .empty{text-align:center;padding:4rem 2rem;color:var(--gray);font-size:15px;grid-column:1/-1;}
+  .loading{text-align:center;padding:4rem;color:var(--gray);grid-column:1/-1;}
+  .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  footer{background:var(--black);color:#555;text-align:center;padding:1.5rem;font-size:12px;margin-top:2rem;border-top:3px solid var(--orange);}
+  #config-banner{background:#FFF3CD;border-left:4px solid #E8A800;padding:12px 2rem;font-size:13px;color:#7A5200;display:none;align-items:center;gap:8px;}
+  #config-banner.show{display:flex;}
+  @media(max-width:640px){header{padding:0 1rem;}.search-section,.grid-section{padding:1rem;}.products-grid{grid-template-columns:1fr;}.cart-drawer{width:100vw;}}
+</style>
+</head>
+<body>
+
+<div id="config-banner" class="show">
+  ⚙️ <strong>Configuração:</strong>&nbsp;Insira suas credenciais do Supabase no script abaixo para ativar o catálogo.
+</div>
+
+<header>
+  <div class="logo-area">
+    <img src="logo.png" alt="GS" onerror="this.style.display='none'"/>
+    <div class="logo-text"><strong>GS Ferramentas</strong><span>Industriais</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="header-badge">Catálogo Oficial</span>
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Orçamento <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="search-section">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" id="search-input" placeholder="Buscar produto, código..." oninput="filterProducts()"/>
+  </div>
+  <select class="filter-select" id="category-filter" onchange="filterProducts()"><option value="">Todas as categorias</option></select>
+  <span class="result-count" id="result-count"></span>
+</div>
+
+<div class="grid-section">
+  <div class="section-title">Produtos</div>
+  <div class="products-grid" id="products-grid"><div class="loading"><div class="spinner"></div>Carregando catálogo...</div></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleModalClick(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="handleCartClick(event)">
+  <div class="cart-drawer">
+    <div class="cart-header"><h2>Solicitação de Orçamento</h2><button class="close-btn" onclick="toggleCart()">✕</button></div>
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total estimado</span><strong id="cart-total">R$ 0,00</strong></div>
+      <p class="cart-note">* Valores sujeitos a confirmação. Enviaremos proposta formal em até 24h.</p>
+      <button class="send-btn" onclick="sendQuote()">📧 Enviar solicitação de orçamento</button>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 GS Ferramentas Industriais · Catálogo Eletrônico · Todos os preços em R$</footer>
+
+<script>
+// ============================================================
+//  ⚙️  CONFIGURAÇÃO — edite apenas estas linhas
+// ============================================================
+const SUPABASE_URL     = 'https://kndanodnhkkmleqicsuj.supabase.co';
+const SUPABASE_ANON_KEY= 'sb_publishable_E6xNspjyYF0KZpBRs4iebg_mTlnG6iy';
+const CONTACT_EMAIL    = 'lucasmachado14@gmail.com';
+// ============================================================
+
+const configured = !SUPABASE_URL.includes('COLOQUE');
+let allProducts=[], cart={};
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!configured){ loadDemo(); }
+  else{ document.getElementById('config-banner').classList.remove('show'); loadProducts(); }
+});
+
+async function loadProducts(){
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/produtos?select=*&order=categoria,nome`,
+      {headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`}});
+    if(!r.ok) throw new Error();
+    allProducts=await r.json(); init();
+  }catch{
+    document.getElementById('products-grid').innerHTML='<div class="empty">Erro ao carregar. Verifique as configurações.</div>';
+  }
+}
+
+function loadDemo(){
+  allProducts=[
+    {id:1,codigo:'FRZ-001',nome:'Fresa de Topo 10mm',categoria:'Fresamento',descricao:'Fabricada em Aço Rápido HSS com 4 cortes. Ideal para usinagem de alumínio, latão e aços macios. Alta durabilidade, acabamento brilhante. Comprimento total 72mm, haste 10mm DIN 6535. Helice 30°.',preco:48.90,unidade:'UN',disponivel:true,imagem_url:''},
+    {id:2,codigo:'FRZ-002',nome:'Fresa Toroidal 12mm',categoria:'Fresamento',descricao:'Metal Duro (Carbide) integral, revestimento TiAlN, 4 cortes. Alta resistência ao calor e abrasão. Indicada para aços temperados e inox. Raio de canto 1mm, haste cilíndrica, compatível com pinças ER.',preco:189.50,unidade:'UN',disponivel:true,imagem_url:''},
+    {id:3,codigo:'BRC-001',nome:'Broca Helicoidal 8mm',categoria:'Furação',descricao:'HSS-Co 5% Cobalto, haste cilíndrica, precisão DIN 338. Ponta 118°, acabamento dourado. Ideal para aços até 900 N/mm². Caixa com 5 unidades.',preco:32.00,unidade:'CX5',disponivel:true,imagem_url:''},
+    {id:4,codigo:'BRC-002',nome:'Broca Canhão 20mm',categoria:'Furação',descricao:'Carbide integral, canais retos, refrigeração interna. Profundidade de furação 3xD. Revestimento TiN. Ideal para aço estrutural e ferro fundido. Alta precisão de posicionamento.',preco:415.00,unidade:'UN',disponivel:false,imagem_url:''},
+    {id:5,codigo:'TRN-001',nome:'Inserto CNMG 120408',categoria:'Torneamento',descricao:'Metal duro grau P25, revestimento CVD multicamada, quebra-cavaco padrão ISO. Geometria negativa para torneamento de aços e ferro fundido. Caixa com 10 insertos.',preco:28.00,unidade:'CX10',disponivel:true,imagem_url:''},
+    {id:6,codigo:'MED-001',nome:'Micrômetro Externo 0–25mm',categoria:'Medição',descricao:'Corpo em aço inox, resolução 0,01mm, fuso endurecido e retificado. Catraca de atrito, trava de fuso. Vem com estojo e padrão de calibração. Precisão ±0,004mm. Certificado de rastreabilidade incluso.',preco:287.00,unidade:'UN',disponivel:true,imagem_url:''},
+  ];
+  init();
+}
+
+function init(){
+  const cats=[...new Set(allProducts.map(p=>p.categoria).filter(Boolean))].sort();
+  const sel=document.getElementById('category-filter');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);});
+  renderProducts(allProducts);
+}
+
+function filterProducts(){
+  const q=document.getElementById('search-input').value.toLowerCase().trim();
+  const cat=document.getElementById('category-filter').value;
+  renderProducts(allProducts.filter(p=>
+    (!cat||p.categoria===cat)&&
+    (!q||p.nome.toLowerCase().includes(q)||(p.codigo||'').toLowerCase().includes(q)||(p.descricao||'').toLowerCase().includes(q))
+  ));
+}
+
+function noImgCard(){
+  return `<div class="product-img-placeholder"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Sem imagem</span></div>`;
+}
+
+function renderProducts(products){
+  document.getElementById('result-count').textContent=`${products.length} produto${products.length!==1?'s':''}`;
+  const grid=document.getElementById('products-grid');
+  if(!products.length){grid.innerHTML='<div class="empty">Nenhum produto encontrado.</div>';return;}
+  grid.innerHTML=products.map(p=>`
+    <div class="product-card ${!p.disponivel?'out-of-stock':''}">
+      <div class="product-img-wrap" onclick="openModal(${p.id})">
+        ${p.imagem_url?`<img src="${p.imagem_url}" alt="${p.nome}" loading="lazy" onerror="this.parentElement.innerHTML=noImgCard()">`:noImgCard()}
+        <span class="stock-badge ${p.disponivel?'in':'out'}">${p.disponivel?'Disponível':'Indisponível'}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.categoria||'—'}</div>
+        <div class="product-name" onclick="openModal(${p.id})">${p.nome}</div>
+        <div class="product-code">Ref: ${p.codigo||'—'}</div>
+        <div class="product-desc">${p.descricao||'<em style="color:#bbb">Sem descrição</em>'}</div>
+        <div class="product-price-area">
+          <div>
+            <div class="price-label">Preço unitário</div>
+            <div class="price-value">${fmt(p.preco)}</div>
+            ${p.unidade?`<div class="price-unit">por ${p.unidade}</div>`:''}
+          </div>
+          <button class="add-btn" onclick="addToCart(${p.id})" ${!p.disponivel?'disabled':''}>
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Orçar
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function openModal(id){
+  const p=allProducts.find(x=>x.id===id); if(!p) return;
+  const imgHtml=p.imagem_url
+    ?`<img class="modal-img" src="${p.imagem_url}" alt="${p.nome}" onerror="this.outerHTML='<div class=modal-img-ph>Sem imagem</div>'">`
+    :`<div class="modal-img-ph">Sem imagem cadastrada</div>`;
+  document.getElementById('modal-inner').innerHTML=`
+    ${imgHtml}
+    <div class="modal-body">
+      <div class="modal-cat">${p.categoria||''}</div>
+      <div class="modal-name">${p.nome}</div>
+      <div class="modal-meta">
+        <span>Ref: <strong>${p.codigo||'—'}</strong></span>
+        <span>${p.disponivel?'<span style="color:#2a7a2a;font-weight:600">✓ Disponível</span>':'<span style="color:#b22222;font-weight:600">✗ Indisponível</span>'}</span>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc-label">Descrição técnica</div>
+      <div class="modal-desc">${p.descricao||'<em>Sem descrição cadastrada.</em>'}</div>
+      <div class="modal-price-box">
+        <div>
+          <div class="modal-price-label">Preço${p.unidade?' / '+p.unidade:''}</div>
+          <div class="modal-price-value">${fmt(p.preco)}</div>
+        </div>
+        <button class="add-btn" onclick="addToCart(${p.id});closeModal()" ${!p.disponivel?'disabled':''} style="padding:12px 22px;font-size:14px">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar ao orçamento
+        </button>
+      </div>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function handleModalClick(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+
+function addToCart(id){
+  cart[id]=(cart[id]||0)+1; updateCartUI();
+}
+function removeFromCart(id){delete cart[id];updateCartUI();}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];updateCartUI();}
+
+function updateCartUI(){
+  const count=Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cart-count').textContent=count;
+  const list=document.getElementById('cart-items-list');
+  const ids=Object.keys(cart);
+  if(!ids.length){list.innerHTML='<div class="empty-cart">Nenhum item adicionado ainda.</div>';document.getElementById('cart-total').textContent='R$ 0,00';return;}
+  let total=0;
+  list.innerHTML=ids.map(id=>{
+    const p=allProducts.find(x=>x.id==id); if(!p) return '';
+    const sub=p.preco*cart[id]; total+=sub;
+    const thumb=p.imagem_url
+      ?`<img class="cart-thumb" src="${p.imagem_url}" onerror="this.outerHTML='<div class=cart-thumb-ph>□</div>'">`
+      :`<div class="cart-thumb-ph">□</div>`;
+    return `<div class="cart-item">${thumb}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.nome}</div>
+        <div class="cart-item-code">${p.codigo} · ${fmt(p.preco)}/${p.unidade||'UN'}</div>
+      </div>
+      <div class="cart-item-controls">
+        <button class="qty-btn" onclick="changeQty(${id},-1)">−</button>
+        <span class="qty-val">${cart[id]}</span>
+        <button class="qty-btn" onclick="changeQty(${id},1)">+</button>
+      </div>
+      <div class="cart-item-price">${fmt(sub)}</div>
+      <button class="remove-item" onclick="removeFromCart(${id})">✕</button>
+    </div>`;
+  }).join('');
+  document.getElementById('cart-total').textContent=fmt(total);
+}
+
+function toggleCart(){document.getElementById('cart-overlay').classList.toggle('open');updateCartUI();}
+function handleCartClick(e){if(e.target===document.getElementById('cart-overlay'))toggleCart();}
+
+function sendQuote(){
+  const ids=Object.keys(cart);
+  if(!ids.length){alert('Adicione produtos ao orçamento primeiro.');return;}
+  let body='Olá, gostaria de solicitar orçamento dos seguintes produtos:\n\n';
+  ids.forEach(id=>{const p=allProducts.find(x=>x.id==id);if(p)body+=`• ${p.nome} (${p.codigo}) — Qtd: ${cart[id]} ${p.unidade||'UN'}\n`;});
+  body+='\nAguardo retorno. Obrigado.';
+  window.location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Solicitação de Orçamento — GS Ferramentas Industriais')}&body=${encodeURIComponent(body)}`;
+}
+
+function fmt(v){return 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+</script>
+</body>
+</html>
