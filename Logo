@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282 178" role="img" aria-labelledby="title desc">
+  <title id="title">GS Ferramentas Industriais</title>
+  <desc id="desc">Logo comemorativa de 90 anos da GS Ferramentas Industriais.</desc>
+  <g transform="translate(38 8)">
+    <text x="0" y="92" transform="rotate(-90 0 92)" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" fill="#D9D9D9" letter-spacing="1">90 anos</text>
+    <path d="M55 36 L98 0 Q111 -7 111 8 L111 29 L150 0 Q164 -9 164 9 L164 30 L203 0 Q217 -10 217 9 Q217 16 210 23 L160 67 Q148 78 148 58 L148 37 L110 67 Q98 77 98 58 L98 37 L62 67 Q51 77 44 68 Q38 60 46 51 Z" fill="#F05A24"/>
+    <text x="56" y="110" font-family="Arial Black, Impact, Arial, sans-serif" font-size="78" font-weight="900" fill="#000" letter-spacing="-5">GS</text>
+    <text x="57" y="137" font-family="Arial Black, Impact, Arial, sans-serif" font-size="23" font-weight="900" fill="#000" textLength="170" lengthAdjust="spacingAndGlyphs">FERRAMENTAS</text>
+    <text x="57" y="161" font-family="Arial Black, Impact, Arial, sans-serif" font-size="23" font-weight="900" fill="#000" textLength="150" lengthAdjust="spacingAndGlyphs">INDUSTRIAIS</text>
+  </g>
+</svg>
